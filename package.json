@@ -25,7 +25,10 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "demo:rag": "tsx examples/rag-demo.ts",
-    "demo:tool": "tsx examples/tool-demo.ts"
+    "demo:tool": "tsx examples/tool-demo.ts",
+    "ui": "npm run dev --prefix ui",
+    "ui:install": "npm install --prefix ui",
+    "ui:build": "npm run build --prefix ui"
   },
   "keywords": [
     "jev",
