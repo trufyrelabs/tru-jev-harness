@@ -93,15 +93,6 @@ export function decideToolAction(
   const { disposition, risk, policyFit } = answers;
   const parsed = parseDisposition(disposition.choice);
 
-  if (policyFit.noul <= thresholds.policyFitBlockBelow) {
-    return {
-      decision: "block",
-      reasons: [
-        `policyFit noul ${policyFit.noul.toFixed(2)} ≤ ${thresholds.policyFitBlockBelow} (block floor)`,
-      ],
-    };
-  }
-
   if (
     risk.score >= thresholds.criticalRisk &&
     risk.confidence >= thresholds.escalateBelowConfidence
@@ -120,6 +111,8 @@ export function decideToolAction(
       reasons: [`unexpected disposition "${disposition.choice}"; refusing to auto-act`],
     };
   }
+
+  const policyTooWeak = policyFit.noul <= thresholds.policyFitBlockBelow;
 
   switch (parsed) {
     case "block": {
@@ -147,6 +140,14 @@ export function decideToolAction(
       };
     }
     case "allow": {
+      if (policyTooWeak) {
+        return {
+          decision: "escalate",
+          reasons: [
+            `policyFit noul ${policyFit.noul.toFixed(2)} ≤ ${thresholds.policyFitBlockBelow}; not auto-executing`,
+          ],
+        };
+      }
       if (disposition.confidence < thresholds.escalateBelowConfidence) {
         return {
           decision: "escalate",

@@ -103,12 +103,20 @@ describe("decideToolAction", () => {
     expect(result.decision).toBe("escalate");
   });
 
-  it("blocks when policy-fit Noul is at or below the block floor", () => {
+  it("does not auto-allow when policy-fit Noul is at or below the floor", () => {
     const result = decideToolAction(
       answers({ choice: "allow", choiceConf: 0.99, risk: 0.1, policyFit: 0.2 }),
       DEFAULT_TOOL_THRESHOLDS,
     );
-    expect(result.decision).toBe("block");
+    expect(result.decision).toBe("escalate");
+  });
+
+  it("keeps Jev escalate when policy-fit is low (needs a human, not a hard block)", () => {
+    const result = decideToolAction(
+      answers({ choice: "escalate", choiceConf: 1, risk: 2.4, riskConf: 0.55, policyFit: 0.07 }),
+      DEFAULT_TOOL_THRESHOLDS,
+    );
+    expect(result.decision).toBe("escalate");
   });
 
   it("blocks critical risk even if disposition is allow", () => {

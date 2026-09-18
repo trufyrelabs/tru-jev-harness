@@ -133,7 +133,11 @@ export type ToolThresholds = {
   blockMinConfidence: number;
   /** Minimum policy-fit Noul to auto-allow. */
   policyFitAllowMin: number;
-  /** At or below this policy-fit Noul, block. */
+  /**
+   * At or below this policy-fit Noul, never auto-allow.
+   * Does not override a confident Choice `block` or critical risk (those still block).
+   * A low noul here usually means "needs a human", not "forbidden".
+   */
   policyFitBlockBelow: number;
   /** Maximum risk Score (0–3 rubric) still eligible for auto-allow. */
   maxAllowRisk: number;
