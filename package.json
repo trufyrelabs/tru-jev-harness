@@ -1,0 +1,58 @@
+{
+  "name": "tru-jev-harness",
+  "version": "0.1.0",
+  "description": "Production-shaped TypeScript demo harness: TypeSafe AI Jev gates for RAG relevance and tool-call risk (TruFyre Technologies).",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "demo:rag": "tsx examples/rag-demo.ts",
+    "demo:tool": "tsx examples/tool-demo.ts"
+  },
+  "keywords": [
+    "jev",
+    "typesafe",
+    "system-one",
+    "rag",
+    "tool-gate",
+    "trufyre",
+    "agents"
+  ],
+  "author": "TruFyre Technologies Pty Ltd",
+  "license": "MIT",
+  "homepage": "https://trufyre.ai/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/trufyrelabs/tru-jev-harness.git"
+  },
+  "bugs": {
+    "url": "https://github.com/trufyrelabs/tru-jev-harness/issues"
+  },
+  "dependencies": {
+    "@typesafe-ai/sdk": "^0.6.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.17.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.8.0",
+    "vitest": "^3.2.0"
+  }
+}
